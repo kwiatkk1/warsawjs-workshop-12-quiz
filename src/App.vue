@@ -9,6 +9,7 @@
               :question="currentQuestion"
               :onCorrectAnswer="next"
               :onWrongAnswer="reset"
+              :onAnswerSelect="onAnwserSelect"
             />
             <v-card v-else>
               <v-card-title>
@@ -44,20 +45,29 @@ export default {
   computed: {
     currentQuestion ({ questions, questionIndex }) {
       return questions[questionIndex]
+    },
+
+    isLastQuestion () {
+      return this.questionIndex === this.questions.length - 1
     }
   },
 
   methods: {
-    next () {
-      if (this.questionIndex + 1 < this.questions.length) {
-        this.questionIndex += 1
-      } else {
+
+    onAnwserSelect () {
+      if (this.isLastQuestion) {
         this.isFinished = true
       }
     },
 
+    next () {
+      const { questionIndex, questions } = this
+      this.questionIndex = Math.min(questionIndex + 1, questions.length - 1)
+    },
+
     reset () {
       this.questionIndex = 0
+      this.isFinished = false
     }
   }
 }

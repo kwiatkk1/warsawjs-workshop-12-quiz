@@ -25,7 +25,7 @@ import QuestionAnswer from './QuestionAnswer'
 export default {
   name: 'QuestionCard',
 
-  props: ['question', 'onCorrectAnswer', 'onWrongAnswer'],
+  props: ['question', 'onCorrectAnswer', 'onWrongAnswer', 'onAnswerSelect'],
 
   components: {
     QuestionAnswer
@@ -48,6 +48,8 @@ export default {
       if (this.selectedAnswer === null) {
         this.selectedAnswer = index
       }
+
+      this.onAnswerSelect()
     },
 
     getStatus (index) {
