@@ -4,21 +4,18 @@ export default [
   {
     title: "Różnica między `==` & `===`?",
     answers: [
-      "żadna",
-      "`==` spr. typ, a potem wartość, `===` spr. od razu wartość, nie spr. typu",
-      "`===` spr. typ, a potem wartość, `==` spr. od razu wartość, nie spr. typu"
+      "żadna, to to samo",
+      "`==` ewentualnie konwertuje swoje operandy, `===` nie"
     ],
-    correctAnswerIndex: 3
+    correctAnswerIndex: 1
   },
   {
     title: "Różnica między `null` a `undefined`?",
     answers: [
-      "żadna",
-      "jest, ale nie pamiętam",
-      "`null` jest nieokreślonym obiektem, `undefined` jest wartością nieokreśloną",
-      "`null` jest pustą wartością, `undefined` jest tym samym"
+      "żadna, to to samo",
+      "`null` jest to obiekt, `undefined` to nieokreślona wartość"
     ],
-    correctAnswerIndex: 2
+    correctAnswerIndex: 1
   },
   {
     title: "W jaki sposób można odwrócić ciąg znaków? Z **pies** otrzymać **seip**.",
@@ -32,18 +29,15 @@ export default [
     correctAnswerIndex: 1
   },
   {
-    title: "Co zwróci operator `typeof` wykonany przez takimi wartościami: `[]`, `{}`, `1`, `NaN`, `null`, `pies`, `Function`",
+    title: "Co zwróci operator `typeof` dla tablicy",
     answers: [
-      "array, object, number, number, null, string, function",
-      "array, object, number, number, object, string, function",
-      "object, object, number, number, null, string, function",
-      "object, object, number, number, object, string, function",
-      "object, object, number, undefined, null, string, function"
+      "array",
+      "object"
     ],
-    correctAnswerIndex: 3
+    correctAnswerIndex: 1
   },
   {
-    title: "Jak usunąć element (znacznik) z DOM (Document Object Model)?",
+    title: "Jak usunąć element (węzeł) z dokumentu?",
     answers: [
       "`element.removeNode()`",
       "`element.removeElement()`",

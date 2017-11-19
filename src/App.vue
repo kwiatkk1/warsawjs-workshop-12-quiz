@@ -3,20 +3,28 @@
     <v-content>
       <v-container>
         <v-layout row justify-center>
-          <v-flex md8 xs10>
-            <img src="https://github.com/macmackiewicz/warsawjs-workshop-12-quiz/raw/master/src/assets/millionaire.png" width="100%">
-            <QuestionCard
-              v-if="!isFinished"
-              :question="currentQuestion"
-              :onCorrectAnswer="next"
-              :onWrongAnswer="reset"
-              :onAnswerSelect="onAnwserSelect"
-            />
-            <v-card v-else>
-              <v-card-title>
-                You've won! Congratulations!
-              </v-card-title>
-            </v-card>
+          <v-flex>
+            <v-tabs fixed icons centered>
+              <v-tabs-bar dark color="cyan">
+                <v-tabs-slider color="yellow"></v-tabs-slider>
+                <v-tabs-item href="#tab-play" @click="reset">
+                  <v-icon>question_answer</v-icon>
+                  Quiz
+                </v-tabs-item>
+                <v-tabs-item href="#tab-editor">
+                  <v-icon>edit</v-icon>
+                  Edytor
+                </v-tabs-item>
+              </v-tabs-bar>
+              <v-tabs-items>
+                <v-tabs-content id="tab-play">
+                  <QuizPlay :questions="questions" :startDate="startDate" />
+                </v-tabs-content>
+                <v-tabs-content id="tab-editor">
+                  <QuizEditor @question-added="handleNewQuestion"/>
+                </v-tabs-content>
+              </v-tabs-items>
+            </v-tabs>
           </v-flex>
         </v-layout>
       </v-container>
@@ -25,50 +33,33 @@
 </template>
 
 <script>
-import QuestionCard from './components/QuestionCard'
+import QuizPlay from './components/QuizPlay'
+import QuizEditor from './components/QuizEditor'
+
 import questions from './questions'
 
 export default {
   name: 'app',
 
   components: {
-    QuestionCard
+    QuizPlay,
+    QuizEditor
   },
 
   data () {
     return {
-      isFinished: false,
-      questionIndex: 0,
-      questions
-    }
-  },
-
-  computed: {
-    currentQuestion ({ questions, questionIndex }) {
-      return questions[questionIndex]
-    },
-
-    isLastQuestion () {
-      return this.questionIndex === this.questions.length - 1
+      startDate: new Date(),
+      questions: questions
     }
   },
 
   methods: {
-
-    onAnwserSelect () {
-      if (this.isLastQuestion) {
-        this.isFinished = true
-      }
-    },
-
-    next () {
-      const { questionIndex, questions } = this
-      this.questionIndex = Math.min(questionIndex + 1, questions.length - 1)
+    handleNewQuestion (newQuestion) {
+      this.questions.push(newQuestion)
     },
 
     reset () {
-      this.questionIndex = 0
-      this.isFinished = false
+      this.startDate = new Date()
     }
   }
 }

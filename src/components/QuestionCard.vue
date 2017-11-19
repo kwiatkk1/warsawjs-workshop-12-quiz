@@ -1,6 +1,21 @@
 <template>
   <v-card>
-    <v-card-title>{{ question.title }}</v-card-title>
+    <v-card-media
+      class="white--text"
+      src="https://github.com/macmackiewicz/warsawjs-workshop-12-quiz/raw/master/src/assets/millionaire.png"
+      height="400px">
+      <v-container fill-height fluid>
+        <v-layout fill-height>
+          <v-flex xs12 align-end flexbox>
+            <span class="headline">{{ progress }}</span>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card-media>
+
+    <v-card-title primary-title>
+      <h3>{{ question.title }}</h3>
+    </v-card-title>
 
     <v-card-text>
       <v-list>
@@ -25,7 +40,7 @@ import QuestionAnswer from './QuestionAnswer'
 export default {
   name: 'QuestionCard',
 
-  props: ['question', 'onCorrectAnswer', 'onWrongAnswer', 'onAnswerSelect'],
+  props: ['question', 'progress', 'onCorrectAnswer', 'onWrongAnswer', 'onAnswerSelect', 'startTime'],
 
   components: {
     QuestionAnswer
@@ -49,7 +64,7 @@ export default {
         this.selectedAnswer = index
       }
 
-      this.onAnswerSelect()
+      this.onAnswerSelect(index === this.question.correctAnswerIndex)
     },
 
     getStatus (index) {
@@ -63,6 +78,10 @@ export default {
 
   watch: {
     question () {
+      this.selectedAnswer = null
+    },
+
+    startTime () {
       this.selectedAnswer = null
     }
   }
