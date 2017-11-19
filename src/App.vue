@@ -1,28 +1,46 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
-  </div>
+  <v-app>
+    <v-content>
+      <v-container>
+        <v-layout>
+          <v-flex>
+            <QuestionCard :question="currentQuestion" />
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import QuestionCard from './components/QuestionCard'
+import questions from './questions'
 
 export default {
   name: 'app',
+
   components: {
-    HelloWorld
+    QuestionCard
+  },
+
+  data () {
+    return {
+      questionIndex: 0,
+      questions
+    }
+  },
+
+  computed: {
+    currentQuestion ({ questions, questionIndex }) {
+      return questions[questionIndex]
+    }
+  },
+
+  methods: {
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
