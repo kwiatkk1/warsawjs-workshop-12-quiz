@@ -4,7 +4,11 @@
       <v-container>
         <v-layout>
           <v-flex>
-            <QuestionCard :question="currentQuestion" />
+            <QuestionCard
+              :question="currentQuestion"
+              :onCorrectAnswer="next"
+              :onWrongAnswer="reset"
+            />
           </v-flex>
         </v-layout>
       </v-container>
@@ -37,6 +41,13 @@ export default {
   },
 
   methods: {
+    next () {
+      this.questionIndex += 1
+    },
+
+    reset () {
+      this.questionIndex = 0
+    }
   }
 }
 </script>

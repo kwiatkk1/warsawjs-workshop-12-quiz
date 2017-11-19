@@ -1,6 +1,7 @@
 <template>
   <v-card>
     <v-card-title>{{ question.title }}</v-card-title>
+
     <v-card-text>
       <v-list>
           <QuestionAnswer v-for="(answer, index) in question.answers" :key="index"
@@ -10,6 +11,11 @@
           />
       </v-list>
     </v-card-text>
+
+    <v-card-actions v-if="selectedAnswer !== null">
+      <v-btn v-if="isCorrectAnswerSelected" @click="onCorrectAnswer">OK, gram dalej!</v-btn>
+      <v-btn v-else @click="onWrongAnswer">To koniec</v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -19,7 +25,7 @@ import QuestionAnswer from './QuestionAnswer'
 export default {
   name: 'QuestionCard',
 
-  props: ['question'],
+  props: ['question', 'onCorrectAnswer', 'onWrongAnswer'],
 
   components: {
     QuestionAnswer
@@ -28,6 +34,12 @@ export default {
   data () {
     return {
       selectedAnswer: null
+    }
+  },
+
+  computed: {
+    isCorrectAnswerSelected ({ selectedAnswer, question }) {
+      return selectedAnswer === question.correctAnswerIndex
     }
   },
 
@@ -44,6 +56,12 @@ export default {
 
       if (index !== selectedAnswer) return ''
       return (selectedAnswer === correctAnswerIndex) ? 'success' : 'error'
+    }
+  },
+
+  watch: {
+    question () {
+      this.selectedAnswer = null
     }
   }
 }
