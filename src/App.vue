@@ -5,10 +5,16 @@
         <v-layout>
           <v-flex>
             <QuestionCard
+              v-if="!isFinished"
               :question="currentQuestion"
               :onCorrectAnswer="next"
               :onWrongAnswer="reset"
             />
+            <v-card v-else>
+              <v-card-title>
+                You've won! Congratulations!
+              </v-card-title>
+            </v-card>
           </v-flex>
         </v-layout>
       </v-container>
@@ -29,6 +35,7 @@ export default {
 
   data () {
     return {
+      isFinished: false,
       questionIndex: 0,
       questions
     }
@@ -42,7 +49,11 @@ export default {
 
   methods: {
     next () {
-      this.questionIndex += 1
+      if (this.questionIndex + 1 < this.questions.length) {
+        this.questionIndex += 1
+      } else {
+        this.isFinished = true
+      }
     },
 
     reset () {
