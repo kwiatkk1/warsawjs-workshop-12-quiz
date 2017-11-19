@@ -76,7 +76,7 @@ export default {
       }
     }
 
-    this.$http.get('https://opentdb.com/api.php?amount=10')
+    this.$http.get('https://opentdb.com/api.php?amount=10&category=18&type=multiple')
       .then(response => response.json())
       .then(data => data.results)
       .then(results => results.map(normalizeQuestion))
