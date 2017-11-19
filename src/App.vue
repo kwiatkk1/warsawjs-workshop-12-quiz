@@ -36,8 +36,6 @@
 import QuizPlay from './components/QuizPlay'
 import QuizEditor from './components/QuizEditor'
 
-import questions from './questions'
-
 export default {
   name: 'app',
 
@@ -49,7 +47,7 @@ export default {
   data () {
     return {
       startDate: new Date(),
-      questions: questions
+      questions: []
     }
   },
 
@@ -61,6 +59,32 @@ export default {
     reset () {
       this.startDate = new Date()
     }
+  },
+
+  created () {
+    function normalizeQuestion ({ category, correct_answer, incorrect_answers, question, type }) {
+      const addCorrectAtIndex = Math.floor(Math.random() * (incorrect_answers.length + 1))
+      const answers = incorrect_answers.slice(0)
+      answers.splice(addCorrectAtIndex, 0, correct_answer)
+
+      console.log('answer for', question, addCorrectAtIndex)
+
+      return {
+        title: `${category}: ${question}`,
+        answers,
+        correctAnswerIndex: addCorrectAtIndex
+      }
+    }
+
+    this.$http.get('https://opentdb.com/api.php?amount=10')
+      .then(response => response.json())
+      .then(data => data.results)
+      .then(results => results.map(normalizeQuestion))
+      .then(newQuestions => {
+        setTimeout(() => {
+          this.questions = newQuestions
+        }, 500)
+      })
   }
 }
 </script>

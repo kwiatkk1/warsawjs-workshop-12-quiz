@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div v-if="!isFinished">
+    <v-container fluid v-if="questions.length === 0">
+      <v-layout row justify-center>
+        <v-progress-circular indeterminate v-bind:size="70" v-bind:width="7" color="blue"></v-progress-circular>
+      </v-layout>
+    </v-container>
+
+    <div v-else-if="!isFinished">
       <QuestionCard
         v-if="!isFinished"
         :question="currentQuestion"

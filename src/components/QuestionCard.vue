@@ -14,7 +14,7 @@
     </v-card-media>
 
     <v-card-title primary-title>
-      <h3>{{ question.title }}</h3>
+      <h3 v-html="question.title"></h3>
     </v-card-title>
 
     <v-card-text>
