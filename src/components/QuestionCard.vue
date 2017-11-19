@@ -71,7 +71,9 @@ export default {
       const { selectedAnswer, question } = this
       const { correctAnswerIndex } = question
 
-      if (index !== selectedAnswer) return ''
+      if (index !== selectedAnswer) {
+        return selectedAnswer !== null && index === correctAnswerIndex ? 'success' : ''
+      }
       return (selectedAnswer === correctAnswerIndex) ? 'success' : 'error'
     }
   },

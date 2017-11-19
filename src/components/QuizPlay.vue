@@ -64,7 +64,6 @@
       onAnwserSelect (isCorrect) {
         if (this.isLastQuestion && isCorrect) {
           this.isFinished = true
-          this.startDate = new Date()
         }
       },
 
@@ -76,7 +75,7 @@
       reset () {
         this.questionIndex = 0
         this.isFinished = false
-        this.startDate = new Date()
+        this.$emit('reset');
       },
 
       handleNewQuestion (newQuestion) {

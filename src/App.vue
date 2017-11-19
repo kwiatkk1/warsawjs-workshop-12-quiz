@@ -18,7 +18,7 @@
               </v-tabs-bar>
               <v-tabs-items>
                 <v-tabs-content id="tab-play">
-                  <QuizPlay :questions="questions" :startDate="startDate" />
+                  <QuizPlay :questions="questions" :startDate="startDate" @reset="reset" />
                 </v-tabs-content>
                 <v-tabs-content id="tab-editor">
                   <QuizEditor @question-added="handleNewQuestion"/>
@@ -57,34 +57,40 @@ export default {
     },
 
     reset () {
-      this.startDate = new Date()
+      this.questions = []
+      this.refreshQuestions()
+    },
+
+    refreshQuestions () {
+      function normalizeQuestion ({ category, correct_answer, incorrect_answers, question }) {
+        const correctAnswerIndex = Math.floor(Math.random() * (incorrect_answers.length + 1))
+        const answers = incorrect_answers.slice(0)
+
+        answers.splice(correctAnswerIndex, 0, correct_answer)
+
+        console.log('answer for', question, correctAnswerIndex)
+
+        return {
+          title: `${category}: ${question}`,
+          answers,
+          correctAnswerIndex
+        }
+      }
+
+      this.$http.get('https://opentdb.com/api.php?amount=10&category=18&type=multiple')
+        .then(response => response.json())
+        .then(data => data.results)
+        .then(results => results.map(normalizeQuestion))
+        .then(newQuestions => {
+          setTimeout(() => {
+            this.questions = newQuestions
+          }, 500)
+        })
     }
   },
 
   created () {
-    function normalizeQuestion ({ category, correct_answer, incorrect_answers, question, type }) {
-      const addCorrectAtIndex = Math.floor(Math.random() * (incorrect_answers.length + 1))
-      const answers = incorrect_answers.slice(0)
-      answers.splice(addCorrectAtIndex, 0, correct_answer)
-
-      console.log('answer for', question, addCorrectAtIndex)
-
-      return {
-        title: `${category}: ${question}`,
-        answers,
-        correctAnswerIndex: addCorrectAtIndex
-      }
-    }
-
-    this.$http.get('https://opentdb.com/api.php?amount=10&category=18&type=multiple')
-      .then(response => response.json())
-      .then(data => data.results)
-      .then(results => results.map(normalizeQuestion))
-      .then(newQuestions => {
-        setTimeout(() => {
-          this.questions = newQuestions
-        }, 500)
-      })
+    this.refreshQuestions()
   }
 }
 </script>

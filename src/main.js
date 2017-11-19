@@ -9,6 +9,7 @@ import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
 Vue.use(VueResource)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
