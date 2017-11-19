@@ -2,20 +2,9 @@
 
 export default [
   {
-    title: "Z jakich 3 warstw składa się JavaScript?",
-    answers: [
-      "Core, BOM, DOM",
-      "Webkit, DevTools, HTML",
-      "Core, DOM, HTML",
-      "HTML, CSS, obrazki"
-    ],
-    correctAnswerIndex: 0
-  },
-  {
     title: "Różnica między `==` & `===`?",
     answers: [
       "żadna",
-      "jest, ale nie pamiętam",
       "`==` spr. typ, a potem wartość, `===` spr. od razu wartość, nie spr. typu",
       "`===` spr. typ, a potem wartość, `==` spr. od razu wartość, nie spr. typu"
     ],

@@ -2,8 +2,9 @@
   <v-app>
     <v-content>
       <v-container>
-        <v-layout>
-          <v-flex>
+        <v-layout row justify-center>
+          <v-flex md8 xs10>
+            <img src="https://github.com/macmackiewicz/warsawjs-workshop-12-quiz/raw/master/src/assets/millionaire.png" width="100%">
             <QuestionCard
               v-if="!isFinished"
               :question="currentQuestion"
